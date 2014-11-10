@@ -1,0 +1,6 @@
+---
+  - name: install the required selinux python bindings
+    yum: name=libselinux-python state=latest
+
+  - name: Set SELinux to permissive for demo purposes
+    selinux: policy=targeted state=permissive

@@ -1,0 +1,18 @@
+---
+- hosts: all
+
+  roles:
+    - common
+    - webcontent
+    - rsyslog_client
+    - role: nginx
+      nginx_http_params:
+        - sendfile off
+        - access_log /var/log/nginx/access.log
+        - error_log /var/log/nginx/error.log
+      nginx_sites:
+         website:
+           - listen 80
+           - server_name localhost
+           - root /var/www
+           - location / { try_files $uri $uri/ /index.html; }

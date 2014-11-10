@@ -1,0 +1,12 @@
+---
+  - name: Make sure rsyslog is installed
+    yum: name={{ item }} state=latest
+    with_items: [ 'rsyslog', 'logrotate' ]
+
+  #- name: Create rsyslog configuration
+  #  copy: src=rsyslog.conf dest=/etc/rsyslog.conf owner=root group=root
+  #  notify: restart rsyslog
+
+  #- name: Create nginx rsyslog configuration
+  #  copy: src=nginx.conf dest=/etc/rsyslog.d/nginx.conf owner=root group=root
+  #  notify: restart rsyslog

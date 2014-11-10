@@ -1,0 +1,7 @@
+---
+  
+- name: Creates nginx web content directory
+  file: dest=/var/www state=directory owner=root group=root
+
+- name: Create website index page
+  copy: src=index.html dest=/var/www/index.html owner=root group=root
