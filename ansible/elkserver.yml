@@ -3,5 +3,6 @@
   roles:
     - common
     - rsyslog_server
-    - role: logstash
-      logstash_version: "1.4"
+    - elasticsearch
+    #- role: logstash
+    #  logstash_version: "1.4"

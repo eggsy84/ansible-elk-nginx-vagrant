@@ -1,0 +1,13 @@
+---
+  - name: Add elasticsearch repo key
+    rpm_key: key="http://packages.elasticsearch.org/GPG-KEY-elasticsearch"
+
+  - name: Add elasticsearch repo
+    copy: src=elasticsearch.repo dest=/etc/yum.repos.d/elasticsearch.repo
+
+  - name: Ensure JDK is installed (dependency for elasticsearch)
+    yum: name=java-1.7.0-openjdk state=installed
+
+  - name: Ensure elasticsearch is installed
+    yum: name=elasticsearch state=installed
+    notify: restart elasticsearch
