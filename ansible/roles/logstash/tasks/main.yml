@@ -1,20 +1,21 @@
 ---
-# tasks file for logstash-role
+ - name: Install Java (dependency for logstash)
+   yum: name=java-1.7.0-openjdk state=latest
 
-- include: logstash_requirements.yml
-  tags:
-   - logstash_req
+ - name: Enable Logstash repository
+   copy: src=logstash.repo dest=/etc/yum.repos.d/logstash.repo
 
-- include: logstash_installation_Debian.yml
-  when: ansible_os_family == "Debian"
-  tags:
-   - logstash_install
+ - name: Add Logstash Repo Key
+   rpm_key: key="http://packages.elasticsearch.org/GPG-KEY-elasticsearch" state=present
 
-- include: logstash_installation_RedHat.yml
-  when: ansible_os_family == "RedHat"
-  tags:
-   - logstash_install
+ - name: Install Logstash and Logstash-Contrib
+   yum: name={{ item }} state=latest
+   with_items: ['logstash', 'logstash-contrib']
 
-- include: logstash_configuration.yml
-  tags:
-   - logstash_conf
+ - name: Configure default settings for Logstash
+   copy: src=defaults.conf dest=/etc/sysconfig/logstash owner=root group=root mode=0644 backup=yes
+   notify: restart logstash
+
+ - name: Copy Logstash Input Configuration
+   copy: src=nginx.conf dest=/etc/logstash/conf.d/nginx.conf owner=root group=root mode=0644
+   notify: restart logstash
