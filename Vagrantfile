@@ -38,7 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 				virtual.customize ['modifyvm', :id, '--memory', opts[:ram] ]
 			end
 
-			config.vm.provision "ansible" do |ansible|
+			machine.vm.provision "ansible" do |ansible|
 				ansible.playbook = "#{opts[:ansible_playbook]}"
 				ansible.verbose = 'vvv'
 				ansible.sudo = true
