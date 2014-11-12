@@ -5,3 +5,4 @@
     - rsyslog_server
     - elasticsearch
     - logstash
+    - kibana

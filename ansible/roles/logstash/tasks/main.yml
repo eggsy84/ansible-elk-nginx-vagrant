@@ -12,6 +12,10 @@
    yum: name={{ item }} state=latest
    with_items: ['logstash', 'logstash-contrib']
 
+ - name: Copy Logstash nginx grok pattern
+   copy: src=nginxgrokpattern dest=/opt/logstash/patterns/nginx owner=root group=root mode=0644
+   notify: restart logstash
+
  - name: Configure default settings for Logstash
    copy: src=defaults.conf dest=/etc/sysconfig/logstash owner=root group=root mode=0644 backup=yes
    notify: restart logstash

@@ -1,0 +1,19 @@
+---
+
+  - name: Create kibana directory
+    file: path=/var/www/kibana state=directory
+
+  - name: Create kibana log directory
+    file: path=/var/log/kibana state=directory
+
+  - name: Download kibana
+    get_url: url=https://download.elasticsearch.org/kibana/kibana/kibana-4.0.0-BETA2.tar.gz dest=/opt/
+
+  - name: Extract kibana
+    shell: tar xzvf /opt/kibana-4.0.0-BETA2.tar.gz -C /opt
+
+  - name: Remove kibana download
+    shell: rm -rf /opt/kibana-4.0.0-BETA2.tar.gz
+
+  - name: Start kibana
+    shell: /opt/kibana-4.0.0-BETA2/bin/kibana >& /var/log/kibana/output.log &

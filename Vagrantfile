@@ -10,14 +10,16 @@ boxes = [
 		:ram => 512,
 		:ansible_playbook => "ansible/webserver.yml",
 		:ip => "192.168.200.1",
-		:port_forwarded => 8080
+		:port_forwarded_host => 8080,
+		:port_forward_guest => 80
 	},
 	{
 		:name => 'elkserver',
 		:ram => 2000,
 		:ansible_playbook => "ansible/elkserver.yml",
 		:ip => "192.168.200.2",
-		:port_forwarded => 8081
+		:port_forwarded_host => 5601,
+		:port_forward_guest => 5601
 	}
 ]
 
@@ -31,7 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		config.vm.define opts[:name] do |machine|
 			machine.vm.hostname = opts[:name]
 			machine.vm.network "private_network", ip: "#{opts[:ip]}"
-			machine.vm.network "forwarded_port", host: opts[:port_forwarded], guest: 80
+			machine.vm.network "forwarded_port", host: opts[:port_forwarded_host], guest: opts[:port_forward_guest]
 
 
 			machine.vm.provider :virtualbox do |virtual|
